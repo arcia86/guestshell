@@ -1,17 +1,20 @@
---
+name: get gcloud cli
+on:
+ workflow_dispatch
 jobs:
-  job_id:
+  get-cli:
+    runs-on: ubuntu-latest
     permissions:
-      contents: read
-      id-token: write
+     contents: 'read'
+     id-token: 'write'
     steps:
-      - uses: actions/checkout@v4
-      - id: auth
-        uses: google-github-actions/auth@v2
-        with:
-          project_id: 'fake-hub-project'
-          workload_identity_provider: 'projects/219661940315/locations/global/workloadIdentityPools/github/providers/my-repo'
-      - name: 'Set up Cloud SDK'
-        uses: google-github-actions/setup-gcloud@v2
-      - name: 'Use gcloud cli'
-        run: 'gcloud info'
+    - uses: actions/checkout@v4
+    - id: auth
+      uses: google-github-actions/auth@v2
+      with:
+        project_id: fake-hub-project
+        workload_identity_provider: projects/219661940315/locations/global/workloadIdentityPools/github/providers/my-repo
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v2
+    - name: Use gcloud cli
+      run: gcloud info
