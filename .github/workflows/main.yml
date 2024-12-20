@@ -1,14 +1,17 @@
+--
 jobs:
   job_id:
+    permissions:
+      contents: read
+      id-token: write
     steps:
-    - id: auth
-      name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v0.4.0
-      with:
-        project_id: fake-hub-project
-        workload_identity_provider: projects/219661940315/locations/global/workloadIdentityPools/github/providers/my-repo
-        service_account: shared-cna@fake-hub-project.iam.gserviceaccount.com
-     - name: Set up cloud SDK
-       uses: google-github-actions/setup-gcloud@V1
-     - name: Use gcloud cli
-       run: gcloud info
+      - uses: actions/checkout@v4
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: 'fake-hub-project'
+          workload_identity_provider: 'projects/219661940315/locations/global/workloadIdentityPools/github/providers/my-repo'
+      - name: 'Set up Cloud SDK'
+        uses: google-github-actions/setup-gcloud@v2
+      - name: 'Use gcloud cli'
+        run: 'gcloud info'
